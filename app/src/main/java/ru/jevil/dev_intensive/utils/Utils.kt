@@ -1,22 +1,42 @@
-package ru.jevil.devintensivetest.utils
+package ru.jevil.dev_intensive.utils
+
+import ru.jevil.dev_intensive.extensions.transliterate
 
 object Utils {
-    fun parsFullName(fullName: String?) : Pair<String?, String?> {
 
-        //todo fix me
-        val parts : List<String>? = fullName?.split(" ")
+    fun parseFullName(fullName: String?): Pair<String?, String?> {
+
+        val parts: List<String>? = fullName?.split(" ")
 
         val firstName = parts?.getOrNull(0)
         val lastName = parts?.getOrNull(1)
-        return firstName to lastName
-    }
 
-    public fun transliteration(payload: String, divider: String = " "): String {
-        //todo
-        return "transliteration"
+        return firstName?.ifEmpty { null } to lastName?.ifEmpty { null }
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-        return "toInitials" //todo
+
+        if (firstName.isNullOrBlank() && lastName.isNullOrBlank()) return null
+
+        val firstNameInitial = firstName?.getOrNull(0)?.toUpperCase()
+        val lastNameInitial = lastName?.getOrNull(0)?.toUpperCase()
+
+        return "${if (firstName.isNullOrBlank()) "" else firstNameInitial}" +
+                "${if (lastName.isNullOrBlank()) "" else lastNameInitial} "
     }
+
+    fun transliteration(payload: String, divider: String = " "): String {
+
+        val result = StringBuilder()
+
+        payload.forEach {
+            if (it == ' ')
+                result.append(divider) else
+            result.append(it.transliterate())
+        }
+
+        return result.toString()
+    }
+
+
 }

@@ -1,6 +1,6 @@
 package ru.jevil.dev_intensive.models
 
-import ru.jevil.devintensivetest.utils.Utils
+import ru.jevil.dev_intensive.utils.Utils
 import java.util.*
 
 data class User(
@@ -31,7 +31,7 @@ data class User(
         fun makeUser(fullName: String?): User {
             lastId++
 
-            val (firstName, lastName) = Utils.parsFullName(fullName)
+            val (firstName, lastName) = Utils.parseFullName(fullName)
 
             return User(id = "$lastId", firstName = firstName, lastName = lastName)
         }

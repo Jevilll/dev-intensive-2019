@@ -2,8 +2,7 @@ package ru.jevil.dev_intensive.extensions
 
 import ru.jevil.dev_intensive.models.User
 import ru.jevil.dev_intensive.models.UserView
-import ru.jevil.devintensivetest.utils.Utils
-import java.util.*
+import ru.jevil.dev_intensive.utils.Utils
 
 fun User.toUserView(): UserView {
 
