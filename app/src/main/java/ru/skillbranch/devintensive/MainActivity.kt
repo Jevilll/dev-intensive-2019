@@ -1,4 +1,4 @@
-package ru.jevil.dev_intensive
+package ru.skillbranch.devintensive
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

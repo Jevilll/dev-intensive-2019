@@ -1,6 +1,6 @@
-package ru.jevil.dev_intensive.utils
+package ru.skillbranch.devintensive.utils
 
-import ru.jevil.dev_intensive.extensions.transliterate
+import ru.skillbranch.devintensive.extensions.transliterate
 
 object Utils {
 

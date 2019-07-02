@@ -1,4 +1,4 @@
-package ru.jevil.dev_intensive.extensions
+package ru.skillbranch.devintensive.extensions
 
 fun Char.transliterate(): String {
     return if (this.isUpperCase()) getTransliterateLetter(this.toLowerCase()).toUpperCase()
