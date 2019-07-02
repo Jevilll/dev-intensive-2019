@@ -6,11 +6,13 @@ object Utils {
 
     fun parseFullName(fullName: String?): Pair<String?, String?> {
 
-        val parts: List<String>? = fullName?.split(" ")
+        val parts: List<String>? = fullName
+                ?.trim()
+                ?.replace("\\s+".toRegex(), " ")
+                ?.split(" ")
 
         val firstName = parts?.getOrNull(0)
         val lastName = parts?.getOrNull(1)
-
         return firstName?.ifEmpty { null } to lastName?.ifEmpty { null }
     }
 
@@ -22,7 +24,7 @@ object Utils {
         val lastNameInitial = lastName?.getOrNull(0)?.toUpperCase()
 
         return "${if (firstName.isNullOrBlank()) "" else firstNameInitial}" +
-                "${if (lastName.isNullOrBlank()) "" else lastNameInitial} "
+                "${if (lastName.isNullOrBlank()) "" else lastNameInitial}"
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
@@ -32,7 +34,7 @@ object Utils {
         payload.forEach {
             if (it == ' ')
                 result.append(divider) else
-            result.append(it.transliterate())
+                result.append(it.transliterate())
         }
 
         return result.toString()

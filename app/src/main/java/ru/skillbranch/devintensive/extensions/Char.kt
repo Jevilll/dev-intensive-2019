@@ -1,7 +1,7 @@
 package ru.skillbranch.devintensive.extensions
 
 fun Char.transliterate(): String {
-    return if (this.isUpperCase()) getTransliterateLetter(this.toLowerCase()).toUpperCase()
+    return if (this.isUpperCase()) getTransliterateLetter(this.toLowerCase()).capitalize()
     else getTransliterateLetter(this)
 }
 
@@ -32,7 +32,7 @@ private fun getTransliterateLetter(letter: Char) = when (letter) {
     'ц' -> "c"
     'ч' -> "ch"
     'ш' -> "sh"
-    'щ' -> "sh"
+    'щ' -> "sh'"
     'ъ' -> ""
     'ы' -> "i"
     'ь' -> ""

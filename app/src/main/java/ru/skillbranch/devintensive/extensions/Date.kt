@@ -3,6 +3,7 @@ package ru.skillbranch.devintensive.extensions
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
+import kotlin.math.round
 
 const val SECOND = 1000L
 const val MINUTE = SECOND * 60
@@ -34,20 +35,27 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
     return this
 }
 
-fun Date.humanizeDiff(): String {
+fun Date.humanizeDiff(date: Date = Date()): String {
 
-    val diffSeconds = (((Date().time - this.time)))
+    val d2 = this.format()
+    val d1 = date.format()
 
-    return when (diffSeconds.abs) {
+    val f1 = this.time
+    val f2 = date.time
+
+
+    val diff = this.time - date.time
+
+    return when (diff.abs) {
         in 0..SECOND -> "только что"
-        in SECOND..S_45 -> getHumanizeTime(diffSeconds, "несколько секунд")
-        in S_45..S_75 -> getHumanizeTime(diffSeconds, "минуту")
-        in S_75..M_45 -> getHumanizeTime(diffSeconds / MINUTE, minutesAsPlurals(diffSeconds.abs / MINUTE))
+        in SECOND..S_45 -> getHumanizeTime(diff, "несколько секунд")
+        in S_45..S_75 -> getHumanizeTime(diff, "минуту")
+        in S_75..M_45 -> getHumanizeTime((roundDiff(diff, MINUTE)), minutesAsPlurals(roundDiff(diff.abs, MINUTE)))
         in M_45..M_75 -> "час назад"
-        in M_75..H_22 -> getHumanizeTime(diffSeconds / HOUR, hoursAsPlurals(diffSeconds.abs / HOUR))
+        in M_75..H_22 -> getHumanizeTime(roundDiff(diff, HOUR), hoursAsPlurals(roundDiff(diff.abs, HOUR)))
         in H_22..H_26 -> "день назад"
-        in H_26..Y -> getHumanizeTime(diffSeconds / DAY, daysAsPlurals(diffSeconds.abs / DAY))
-        else -> if (diffSeconds > 0) "более года назад" else "более чем через год"
+        in H_26..Y -> getHumanizeTime(roundDiff(diff, DAY), daysAsPlurals(roundDiff(diff.abs, DAY)))
+        else -> if (diff > 0) "более чем через год" else "более года назад"
     }
 }
 
@@ -60,10 +68,12 @@ enum class TimeUnits {
 
 fun getHumanizeTime(diff: Long, text: String): String =
     if (diff > 0) {
-        "$text назад"
-    } else {
         "через $text"
+    } else {
+        "$text назад"
     }
+
+fun roundDiff(diff: Long, time: Long) : Long = round(diff.toFloat() / time).toLong()
 
 enum class Plurals {
     ONE,
