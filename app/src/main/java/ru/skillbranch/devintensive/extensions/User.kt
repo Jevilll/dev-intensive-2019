@@ -17,6 +17,5 @@ fun User.toUserView(): UserView {
                     initials = initials,
                     avatar = avatar,
                     status = status
-
             )
 }

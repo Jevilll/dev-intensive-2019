@@ -37,13 +37,6 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
 
 fun Date.humanizeDiff(date: Date = Date()): String {
 
-    val d2 = this.format()
-    val d1 = date.format()
-
-    val f1 = this.time
-    val f2 = date.time
-
-
     val diff = this.time - date.time
 
     return when (diff.abs) {
@@ -63,7 +56,14 @@ enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+
+    fun plural(value: Long): String = when (this) {
+        SECOND -> secondsAsPlurals(value)
+        MINUTE -> minutesAsPlurals(value)
+        HOUR -> hoursAsPlurals(value)
+        DAY -> daysAsPlurals(value)
+    }
 }
 
 fun getHumanizeTime(diff: Long, text: String): String =
@@ -73,7 +73,7 @@ fun getHumanizeTime(diff: Long, text: String): String =
         "$text назад"
     }
 
-fun roundDiff(diff: Long, time: Long) : Long = round(diff.toFloat() / time).toLong()
+fun roundDiff(diff: Long, time: Long): Long = round(diff.toFloat() / time).toLong()
 
 enum class Plurals {
     ONE,
@@ -91,6 +91,12 @@ val Long.asPlurals
 
 val Long.abs
     get() = abs(this)
+
+private fun secondsAsPlurals(value: Long) = when (value.asPlurals) {
+    Plurals.ONE -> "$value секунду"
+    Plurals.FEW -> "$value секунды"
+    Plurals.MANY -> "$value секунд"
+}
 
 private fun minutesAsPlurals(value: Long) = when (value.asPlurals) {
     Plurals.ONE -> "$value минуту"
