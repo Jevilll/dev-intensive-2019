@@ -13,13 +13,11 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
 
-//        if (answer.isBlank()) return "Ответ не должен быть пустым\n${question.question}" to status.color
-
         val (validate, hint) = question.validate(answer)
 
         if (!validate) return "$hint\n${question.question}" to status.color
 
-        if (question.answers.isEmpty()) return return question.question to status.color
+        if (question.answers.isEmpty()) return question.question to status.color
 
         if (question.answers.contains(answer.toLowerCase())) {
             question = question.nextQuestion()

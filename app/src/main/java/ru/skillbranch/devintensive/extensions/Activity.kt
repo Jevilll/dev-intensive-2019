@@ -1,10 +1,12 @@
 package ru.skillbranch.devintensive.extensions
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Rect
+import android.util.TypedValue
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
+import kotlin.math.roundToInt
 
 fun Activity.hideKeyboard() {
     val imm = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -15,35 +17,24 @@ fun Activity.hideKeyboard() {
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-//fun Activity.isKeyboardOpen(): Boolean {
-//
-//    val rootView = this.window.decorView.rootView
-//
-//    rootView.viewTreeObserver.addOnGlobalLayoutListener {
-//        val r = Rect()
-//        rootView.getWindowVisibleDisplayFrame(r)
-//        val heightDiff = rootView.height - r.bottom - r.top
-//        if (heightDiff > 100) return true
-//        else return false
-//    }
-//
-//    val s = 5;
-//
-////    final View activityRootView = findViewById(R.id.activityRoot);
-////    activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-////        @Override
-////        public void onGlobalLayout() {
-////            Rect r = new Rect();
-////            //r will be populated with the coordinates of your view that area still visible.
-////            activityRootView.getWindowVisibleDisplayFrame(r);
-////
-////            int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
-////            if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
-////                ... do something here
-////            }
-////        }
-////    });
-//
-//
-//    return false
-//}
+fun Activity.getRootView(): View = findViewById(android.R.id.content)
+
+fun Context.convertDpToPx(dp: Float): Float {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        dp,
+        this.resources.displayMetrics
+    )
+}
+
+fun Activity.isKeyboardOpen(): Boolean {
+    val visibleBounds = Rect()
+    this.getRootView().getWindowVisibleDisplayFrame(visibleBounds)
+    val heightDiff = getRootView().height - visibleBounds.height()
+    val marginOfError = this.convertDpToPx(50F).roundToInt()
+    return heightDiff > marginOfError
+}
+
+fun Activity.isKeyboardClosed(): Boolean {
+    return !this.isKeyboardOpen()
+}
