@@ -21,7 +21,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
         if (question.answers.contains(answer.toLowerCase())) {
             question = question.nextQuestion()
-            return "Отлично - это правильный ответ!\n${question.question}" to status.color
+            return "Отлично - ты справился\n${question.question}" to status.color
         } else {
             status = status.nextStatus()
 
@@ -32,7 +32,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
                 return "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
             }
 
-            return "Это неправильный ответ!\n${question.question}" to status.color
+            return "Это неправильный ответ\n${question.question}" to status.color
         }
     }
 
@@ -48,7 +48,6 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             values()[0]
         }
     }
-
 
     enum class Question(val question: String, val answers: List<String>) {
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
