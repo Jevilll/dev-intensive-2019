@@ -6,11 +6,14 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.PorterDuffXfermode
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_profile.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.btn_edit
 import kotlinx.android.synthetic.main.activity_profile.et_about
 import kotlinx.android.synthetic.main.activity_profile.et_first_name
@@ -22,6 +25,8 @@ import kotlinx.android.synthetic.main.activity_profile.tv_respect
 import kotlinx.android.synthetic.main.activity_profile.wr_about
 import kotlinx.android.synthetic.main.activity_profile_constraint.*
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -29,21 +34,24 @@ class ProfileActivity : AppCompatActivity() {
         const val IS_EDIT_MODE = "IS_EDIT_MODE"
     }
 
+    private lateinit var viewModel: ProfileViewModel
     var isEditMode = false
     lateinit var viewFields: Map<String, TextView>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //TODO set custom Theme this before super
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_constraint)
-
         initViews(savedInstanceState)
+        initViewModel()
+        Log.d("M_ProfileActivity", "onCreate")
     }
 
     private fun initViews(savedInstanceState: Bundle?) {
 
         viewFields = mapOf(
-                "nickname" to tv_nick_name,
+                "nickName" to tv_nick_name,
                 "rank" to tv_rank,
                 "firstName" to et_first_name,
                 "lastName" to et_last_name,
@@ -57,8 +65,34 @@ class ProfileActivity : AppCompatActivity() {
         showCurrentMode(isEditMode)
 
         btn_edit.setOnClickListener {
+            if (isEditMode) saveProfileInfo()
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
+        }
+
+        btn_switch_theme.setOnClickListener {
+            viewModel.switchTheme()
+        }
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
+        viewModel.getProfileData().observe(this, Observer { updateUI(it) })
+        viewModel.getTheme().observe(this, Observer { updateTheme(it) })
+
+
+    }
+
+    private fun updateTheme(mode: Int) {
+        Log.d("M_ProfileActivity", "Update theme")
+        delegate.setLocalNightMode(mode)
+    }
+
+    private fun updateUI(profile: Profile) {
+        profile.toMap().also {
+            for ((k,v) in viewFields) {
+                    v.text = it[k].toString()
+            }
         }
     }
 
@@ -92,13 +126,24 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             val icon = if (isEdit) {
-                resources.getDrawable(R.drawable.ic_save_black_24dp)
+                resources.getDrawable(R.drawable.ic_save_black_24dp, theme)
             } else {
-                resources.getDrawable(R.drawable.ic_eye_24dp)
+                resources.getDrawable(R.drawable.ic_eye_24dp, theme)
             }
 
             background.colorFilter = filter
             setImageDrawable(icon)
+        }
+    }
+
+    private fun saveProfileInfo() {
+        Profile(
+            firstName = et_first_name.text.toString(),
+            lastName = et_last_name.text.toString(),
+            about = et_about.text.toString(),
+            repository = et_repository.text.toString()
+        ).apply {
+            viewModel.saveProfileData(this)
         }
     }
 }
