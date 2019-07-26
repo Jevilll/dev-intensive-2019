@@ -3,27 +3,15 @@ package ru.skillbranch.devintensive.ui.profile
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.graphics.PorterDuffXfermode
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.activity_profile.btn_edit
-import kotlinx.android.synthetic.main.activity_profile.et_about
-import kotlinx.android.synthetic.main.activity_profile.et_first_name
-import kotlinx.android.synthetic.main.activity_profile.et_last_name
-import kotlinx.android.synthetic.main.activity_profile.et_repository
-import kotlinx.android.synthetic.main.activity_profile.ic_eye
-import kotlinx.android.synthetic.main.activity_profile.tv_rating
-import kotlinx.android.synthetic.main.activity_profile.tv_respect
-import kotlinx.android.synthetic.main.activity_profile.wr_about
-import kotlinx.android.synthetic.main.activity_profile_constraint.*
+import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
@@ -42,7 +30,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         //TODO set custom Theme this before super
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile_constraint)
+        setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
         initViewModel()
         Log.d("M_ProfileActivity", "onCreate")
