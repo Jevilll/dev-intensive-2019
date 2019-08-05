@@ -20,11 +20,10 @@
         android:id="@+id/iv_avatar"
         android:layout_width="@dimen/avatar_round_size_112"
         android:layout_height="@dimen/avatar_round_size_112"
-        app:cv_borderColor="#ff0000"
+        app:cv_borderColor="@android:color/white"
         app:cv_borderWidth="2dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_nick_name"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:srcCompat="@drawable/avatar_default" />

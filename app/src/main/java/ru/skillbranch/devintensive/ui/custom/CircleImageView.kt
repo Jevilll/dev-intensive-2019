@@ -117,7 +117,7 @@ class CircleImageView @JvmOverloads constructor(
                 return
             }
 
-            mBorderWidth = dp
+            mBorderWidth = 1
             setup()
     }
 

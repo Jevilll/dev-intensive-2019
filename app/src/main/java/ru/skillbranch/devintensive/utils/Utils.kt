@@ -39,9 +39,6 @@ object Utils {
 
         return result.toString()
     }
-
-
 }
-
 
 

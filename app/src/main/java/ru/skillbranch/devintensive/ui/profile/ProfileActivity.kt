@@ -20,6 +20,7 @@ import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.extensions.onChange
 import ru.skillbranch.devintensive.extensions.validateUrl
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.LetterTileProvider
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
@@ -62,7 +63,7 @@ class ProfileActivity : AppCompatActivity() {
             if (isEditMode) {
                 if (!et_repository.text.toString().validateUrl()) {
                     et_repository.text = null
-                    et_repository.error = null
+                    wr_repository.error = null
                 }
                 saveProfileInfo()
             }
@@ -75,8 +76,13 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         et_repository.onChange {
-            if (!it.validateUrl()) et_repository.error = "Невалидный адрес репозитория"
+            if (!it.validateUrl()) wr_repository.error = "Невалидный адрес репозитория"
         }
+
+//        val tileProvider = LetterTileProvider(this)
+//        val letterTile = tileProvider.getLetterTile("name", "key", 500, 500)
+//
+//        iv_avatar.setImageBitmap(letterTile)
 
     }
 
