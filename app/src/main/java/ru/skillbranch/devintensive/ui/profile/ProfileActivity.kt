@@ -4,6 +4,7 @@ import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -16,6 +17,8 @@ import androidx.lifecycle.ViewModelProviders
 //import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.extensions.onChange
+import ru.skillbranch.devintensive.extensions.validateUrl
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
@@ -56,7 +59,13 @@ class ProfileActivity : AppCompatActivity() {
         showCurrentMode(isEditMode)
 
         btn_edit.setOnClickListener {
-            if (isEditMode) saveProfileInfo()
+            if (isEditMode) {
+                if (!et_repository.text.toString().validateUrl()) {
+                    et_repository.text = null
+                    et_repository.error = null
+                }
+                saveProfileInfo()
+            }
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
         }
@@ -65,7 +74,9 @@ class ProfileActivity : AppCompatActivity() {
             viewModel.switchTheme()
         }
 
-
+        et_repository.onChange {
+            if (!it.validateUrl()) et_repository.error = "Невалидный адрес репозитория"
+        }
 
     }
 

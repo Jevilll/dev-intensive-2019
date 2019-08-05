@@ -15,6 +15,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
+import android.widget.ImageView
 
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -74,21 +75,28 @@ class CircleImageView @JvmOverloads constructor(
             initializeBitmap()
         }
 
-    var borderColor: Int
-        get() = mBorderColor
-        set(@ColorRes colorId) {
-            applyColor(colorId)
-//            if (colorId == mBorderColor) {
-//                return
-//            }
+//    var borderColor: Int
+//        get() = mBorderColor
+//        set(@ColorRes colorId) {
+//            applyColor(colorId)
+////            if (colorId == mBorderColor) {
+////                return
+////            }
+////
+////            mBorderColor = colorId
+////            mBorderPaint.color = mBorderColor
+////            invalidate()
+//        }
 //
-//            mBorderColor = colorId
-//            mBorderPaint.color = mBorderColor
-//            invalidate()
-        }
+
+    fun getBorderColor():Int = mBorderColor
 
     fun setBorderColor(hex: String) {
         applyColor(Color.parseColor(hex))
+    }
+
+    fun setBorderColor(@ColorRes colorId: Int) {
+        applyColor(colorId)
     }
 
     private fun applyColor(color: Int) {
@@ -101,16 +109,28 @@ class CircleImageView @JvmOverloads constructor(
         invalidate()
     }
 
-    var borderWidth: Int
-        get() = mBorderWidth
-        set(@Dimension borderWidth) {
-            if (borderWidth == mBorderWidth) {
+    @Dimension
+    fun getBorderWidth():Int = mBorderWidth
+
+    fun setBorderWidth(@Dimension dp:Int) {
+        if (dp == mBorderWidth) {
                 return
             }
 
-            mBorderWidth = borderWidth
+            mBorderWidth = dp
             setup()
-        }
+    }
+
+//    var borderWidth: Int
+//        get() = mBorderWidth
+//        set(@Dimension borderWidth) {
+//            if (borderWidth == mBorderWidth) {
+//                return
+//            }
+//
+//            mBorderWidth = borderWidth
+//            setup()
+//        }
 
     init {
 

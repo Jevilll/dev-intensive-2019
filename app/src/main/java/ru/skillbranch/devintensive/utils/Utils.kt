@@ -40,12 +40,7 @@ object Utils {
         return result.toString()
     }
 
-    fun validateUrl(url: String): Boolean {
-        val urlRegex = Regex("^(https://)?(www.)?github.com/(?!$exclude)(\\w*(-)?\\w{2,}[^/]$)")
-        return urlRegex.containsMatchIn(url)
-    }
 
-    private const val exclude = "enterprise|features|topics|collections|trending|events|marketplace|pricing|nonprofit|customer-stories|security|login|join"
 }
 
 
