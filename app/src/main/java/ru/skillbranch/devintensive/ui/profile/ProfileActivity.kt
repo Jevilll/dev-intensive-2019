@@ -1,9 +1,6 @@
 package ru.skillbranch.devintensive.ui.profile
 
-import android.graphics.BitmapFactory
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
+import android.graphics.*
 import android.os.Bundle
 import android.text.TextWatcher
 import android.util.Log
@@ -88,9 +85,12 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.getProfileData().observe(this, Observer { updateUI(it) })
         viewModel.getTheme().observe(this, Observer { updateTheme(it) })
 
+        val s = viewModel.getProfileData().value?.getInitials()
+
+        if (viewModel.getProfileData().value?.getInitials() == null) return
 
         val tileProvider = LetterTileProvider(this)
-        val letterTile = tileProvider.getLetterTile(viewModel.getProfileData().value!!.getInitials(), convertDpToPx(112F).toInt(), convertDpToPx(112F).toInt())
+        val letterTile = tileProvider.getLetterTile(viewModel.getProfileData().value!!.getInitials()!!, convertDpToPx(112F).toInt(), convertDpToPx(112F).toInt())
 
         iv_avatar.setImageBitmap(letterTile)
     }
