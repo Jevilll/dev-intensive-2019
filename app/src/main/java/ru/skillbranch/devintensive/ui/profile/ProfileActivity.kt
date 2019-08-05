@@ -20,7 +20,6 @@ import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.extensions.onChange
 import ru.skillbranch.devintensive.extensions.validateUrl
 import ru.skillbranch.devintensive.models.Profile
-import ru.skillbranch.devintensive.utils.LetterTileProvider
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
