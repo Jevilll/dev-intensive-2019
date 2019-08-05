@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.ui.profile
 
+import android.graphics.BitmapFactory
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -17,9 +18,11 @@ import androidx.lifecycle.ViewModelProviders
 //import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.extensions.convertDpToPx
 import ru.skillbranch.devintensive.extensions.onChange
 import ru.skillbranch.devintensive.extensions.validateUrl
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.LetterTileProvider
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
@@ -78,11 +81,6 @@ class ProfileActivity : AppCompatActivity() {
             if (!it.validateUrl()) wr_repository.error = "Невалидный адрес репозитория"
         }
 
-//        val tileProvider = LetterTileProvider(this)
-//        val letterTile = tileProvider.getLetterTile("name", "key", 500, 500)
-//
-//        iv_avatar.setImageBitmap(letterTile)
-
     }
 
     private fun initViewModel() {
@@ -90,6 +88,11 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.getProfileData().observe(this, Observer { updateUI(it) })
         viewModel.getTheme().observe(this, Observer { updateTheme(it) })
 
+
+        val tileProvider = LetterTileProvider(this)
+        val letterTile = tileProvider.getLetterTile(viewModel.getProfileData().value!!.getInitials(), convertDpToPx(112F).toInt(), convertDpToPx(112F).toInt())
+
+        iv_avatar.setImageBitmap(letterTile)
     }
 
     private fun updateTheme(mode: Int) {
