@@ -27,6 +27,10 @@ fun Context.convertDpToPx(dp: Float): Float {
     )
 }
 
+fun Context.convertPxToDp(px: Int): Int {
+    return (px /  this.resources.displayMetrics.density).toInt()
+}
+
 fun Activity.isKeyboardOpen(): Boolean {
     val visibleBounds = Rect()
     this.getRootView().getWindowVisibleDisplayFrame(visibleBounds)

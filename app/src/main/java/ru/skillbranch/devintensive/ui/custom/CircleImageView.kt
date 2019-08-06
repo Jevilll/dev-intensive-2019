@@ -26,6 +26,7 @@ import androidx.appcompat.widget.AppCompatImageView
 
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.extensions.convertDpToPx
+import ru.skillbranch.devintensive.extensions.convertPxToDp
 import kotlin.math.min
 
 class CircleImageView @JvmOverloads constructor(
@@ -52,7 +53,7 @@ class CircleImageView @JvmOverloads constructor(
     private val mCircleBackgroundPaint = Paint()
 
     private var mBorderColor = DEFAULT_BORDER_COLOR
-    private var mBorderWidth = DEFAULT_BORDER_WIDTH
+    private var mBorderWidth = context.convertPxToDp(DEFAULT_BORDER_WIDTH)
 
     private var mBitmap: Bitmap? = null
     private var mBitmapShader: BitmapShader? = null
@@ -94,10 +95,10 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     @Dimension(unit = DP)
-    fun getBorderWidth():Int = mBorderWidth
+    fun getBorderWidth():Int = context.convertPxToDp(mBorderWidth)
 
     fun setBorderWidth(@Dimension(unit = DP) dp:Int) {
-            mBorderWidth = dp
+            mBorderWidth = context.convertDpToPx(dp.toFloat()).toInt()
             setup()
     }
 
@@ -106,7 +107,7 @@ class CircleImageView @JvmOverloads constructor(
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0)
 
-            mBorderWidth = context.convertDpToPx(a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, DEFAULT_BORDER_WIDTH).toFloat()).toInt()
+            mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, DEFAULT_BORDER_WIDTH)
             mBorderColor = a.getColor(R.styleable.CircleImageView_cv_borderColor, DEFAULT_BORDER_COLOR)
             a.recycle()
         }
@@ -260,7 +261,7 @@ class CircleImageView @JvmOverloads constructor(
         mBorderPaint.style = Paint.Style.STROKE
         mBorderPaint.isAntiAlias = true
         mBorderPaint.color = mBorderColor
-        mBorderPaint.strokeWidth = context.convertDpToPx(mBorderWidth.toFloat())
+        mBorderPaint.strokeWidth = mBorderWidth.toFloat()
 
         mCircleBackgroundPaint.style = Paint.Style.FILL
         mCircleBackgroundPaint.isAntiAlias = true
@@ -269,11 +270,11 @@ class CircleImageView @JvmOverloads constructor(
         mBitmapWidth = mBitmap!!.width
 
         mBorderRect.set(calculateBounds())
-        mBorderRadius = min((mBorderRect.height() - context.convertDpToPx(mBorderWidth.toFloat())) / 2.0f, (mBorderRect.width() - context.convertDpToPx(mBorderWidth.toFloat())) / 2.0f)
+        mBorderRadius = min((mBorderRect.height() - mBorderWidth) / 2.0f, (mBorderRect.width() - mBorderWidth) / 2.0f)
 
         mDrawableRect.set(mBorderRect)
         if (!mBorderOverlay && mBorderWidth > 0) {
-            mDrawableRect.inset(context.convertDpToPx(mBorderWidth.toFloat()) - 1.0f, context.convertDpToPx(mBorderWidth.toFloat()) - 1.0f)
+            mDrawableRect.inset(mBorderWidth - 1.0f, mBorderWidth - 1.0f)
         }
         mDrawableRadius = min(mDrawableRect.height() / 2.0f, mDrawableRect.width() / 2.0f)
 

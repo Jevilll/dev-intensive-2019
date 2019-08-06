@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.extensions.convertDpToPx
+import ru.skillbranch.devintensive.extensions.convertPxToDp
 import ru.skillbranch.devintensive.extensions.onChange
 import ru.skillbranch.devintensive.extensions.validateUrl
 import ru.skillbranch.devintensive.models.Profile
@@ -92,6 +93,13 @@ class ProfileActivity : AppCompatActivity() {
 
         iv_avatar.setImageBitmap(letterTile)
 
+//        val s = convertDpToPx(2f)
+//
+//        val b = convertPxToDp(5)
+//
+//
+//        val g = iv_avatar.getBorderWidth()
+//        val i = 5
 
     }
 
