@@ -91,6 +91,8 @@ class ProfileActivity : AppCompatActivity() {
         val letterTile = tileProvider.getLetterTile(viewModel.getProfileData().value!!.getInitials()!!, convertDpToPx(112F).toInt(), convertDpToPx(112F).toInt())
 
         iv_avatar.setImageBitmap(letterTile)
+
+
     }
 
     private fun updateTheme(mode: Int) {
