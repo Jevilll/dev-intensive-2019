@@ -5,7 +5,10 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.graphics.*
 import android.text.TextPaint
+import android.util.TypedValue
 import ru.skillbranch.devintensive.R
+
+
 
 class LetterTileProvider
     (private val context: Context) {
@@ -32,7 +35,8 @@ class LetterTileProvider
 
         val c = mCanvas
         c.setBitmap(bitmap)
-        c.drawColor(context.resources.getColor(R.color.color_accent, context.theme))
+//        c.drawColor(context.resources.getColor(R.color.color_accent, context.theme))
+        c.drawColor(fetchAccentColor())
 
         mPaint.textSize = mTileLetterFontSize.toFloat()
         mPaint.getTextBounds(initials.toCharArray(), 0, 1, mBounds)
@@ -41,5 +45,16 @@ class LetterTileProvider
                     + (mBounds.bottom - mBounds.top) / 2).toFloat(), mPaint
         )
         return bitmap
+    }
+
+    private fun fetchAccentColor(): Int {
+        val typedValue = TypedValue()
+
+        val a = context.obtainStyledAttributes(typedValue.data, intArrayOf(R.attr.colorAccent))
+        val color = a.getColor(0, 0)
+
+        a.recycle()
+
+        return color
     }
 }
