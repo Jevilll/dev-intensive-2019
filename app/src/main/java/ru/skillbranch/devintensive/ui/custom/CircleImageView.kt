@@ -20,6 +20,7 @@ import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
+import androidx.annotation.Dimension.DP
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
 
@@ -82,7 +83,7 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     fun setBorderColor(@ColorRes colorId: Int) {
-        applyColor(context.resources.getColor(colorId, context.theme))
+        applyColor(resources.getColor(colorId, context.theme))
     }
 
     private fun applyColor(color: Int) {
@@ -95,10 +96,10 @@ class CircleImageView @JvmOverloads constructor(
         invalidate()
     }
 
-    @Dimension
+    @Dimension(unit = DP)
     fun getBorderWidth():Int = mBorderWidth
 
-    fun setBorderWidth(@Dimension dp:Int) {
+    fun setBorderWidth(@Dimension(unit = DP) dp:Int) {
         if (dp == mBorderWidth) {
                 return
             }
