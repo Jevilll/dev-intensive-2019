@@ -25,6 +25,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
 
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.extensions.convertDpToPx
 import kotlin.math.min
 
 class CircleImageView @JvmOverloads constructor(
@@ -96,10 +97,6 @@ class CircleImageView @JvmOverloads constructor(
     fun getBorderWidth():Int = mBorderWidth
 
     fun setBorderWidth(@Dimension(unit = DP) dp:Int) {
-//        if (dp == mBorderWidth) {
-//                return
-//            }
-
             mBorderWidth = dp
             setup()
     }
@@ -263,7 +260,7 @@ class CircleImageView @JvmOverloads constructor(
         mBorderPaint.style = Paint.Style.STROKE
         mBorderPaint.isAntiAlias = true
         mBorderPaint.color = mBorderColor
-        mBorderPaint.strokeWidth = mBorderWidth.toFloat()
+        mBorderPaint.strokeWidth = context.convertDpToPx(mBorderWidth.toFloat())
 
         mCircleBackgroundPaint.style = Paint.Style.FILL
         mCircleBackgroundPaint.isAntiAlias = true
@@ -272,11 +269,11 @@ class CircleImageView @JvmOverloads constructor(
         mBitmapWidth = mBitmap!!.width
 
         mBorderRect.set(calculateBounds())
-        mBorderRadius = min((mBorderRect.height() - mBorderWidth) / 2.0f, (mBorderRect.width() - mBorderWidth) / 2.0f)
+        mBorderRadius = min((mBorderRect.height() - context.convertDpToPx(mBorderWidth.toFloat())) / 2.0f, (mBorderRect.width() - context.convertDpToPx(mBorderWidth.toFloat())) / 2.0f)
 
         mDrawableRect.set(mBorderRect)
         if (!mBorderOverlay && mBorderWidth > 0) {
-            mDrawableRect.inset(mBorderWidth - 1.0f, mBorderWidth - 1.0f)
+            mDrawableRect.inset(context.convertDpToPx(mBorderWidth.toFloat()) - 1.0f, context.convertDpToPx(mBorderWidth.toFloat()) - 1.0f)
         }
         mDrawableRadius = min(mDrawableRect.height() / 2.0f, mDrawableRect.width() / 2.0f)
 

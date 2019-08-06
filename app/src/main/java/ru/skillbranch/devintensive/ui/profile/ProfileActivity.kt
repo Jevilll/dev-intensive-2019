@@ -85,8 +85,6 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.getProfileData().observe(this, Observer { updateUI(it) })
         viewModel.getTheme().observe(this, Observer { updateTheme(it) })
 
-        val s = viewModel.getProfileData().value?.getInitials()
-
         if (viewModel.getProfileData().value?.getInitials() == null) return
 
         val tileProvider = LetterTileProvider(this)
