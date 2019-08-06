@@ -96,9 +96,9 @@ class CircleImageView @JvmOverloads constructor(
     fun getBorderWidth():Int = mBorderWidth
 
     fun setBorderWidth(@Dimension(unit = DP) dp:Int) {
-        if (dp == mBorderWidth) {
-                return
-            }
+//        if (dp == mBorderWidth) {
+//                return
+//            }
 
             mBorderWidth = dp
             setup()
