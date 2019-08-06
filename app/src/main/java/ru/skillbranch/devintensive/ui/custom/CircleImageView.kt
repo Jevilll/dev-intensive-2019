@@ -87,10 +87,6 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun applyColor(color: Int) {
-        if (color == mBorderColor) {
-            return
-        }
-
         mBorderColor = color
         mBorderPaint.color = mBorderColor
         invalidate()
