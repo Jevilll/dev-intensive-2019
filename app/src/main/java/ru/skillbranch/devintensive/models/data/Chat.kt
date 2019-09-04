@@ -31,7 +31,7 @@ data class Chat(
     fun lastMessageShort(): Pair<String, String?> = when(val lastMessage = messages.lastOrNull()){
        //TODO implement me
 
-        else -> "Сообщений пока нет" to ""
+        else -> "Сообщений пока нет" to "@John_doe"
     }
 
     private fun isSingle(): Boolean = members.size == 1
