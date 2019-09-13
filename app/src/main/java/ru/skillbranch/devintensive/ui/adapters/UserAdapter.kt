@@ -54,9 +54,12 @@ class UserAdapter(val listener: (UserItem) -> Unit) : RecyclerView.Adapter<UserA
 
         fun bind(user: UserItem, listener: (UserItem) -> Unit) {
             if (user.avatar != null) {
-                Glide.with(itemView).load(user.avatar).into(iv_avatar_user)
+                Glide.with(itemView)
+                    .load(user.avatar)
+                    .into(iv_avatar_user)
             } else {
-                Glide.with(itemView).clear(iv_avatar_user)
+                Glide.with(itemView)
+                    .clear(iv_avatar_user)
 //                iv_avatar_user.setInitials(user.initials ?: "??")
             }
 
